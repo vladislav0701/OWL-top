@@ -2,6 +2,7 @@ import { useEffect, useState, KeyboardEvent } from 'react';
 import cn from 'classnames';
 
 import { RatingProps } from './Rating.props';
+
 import styles from './Rating.module.css';
 import StarIcon from './star.svg';
 
@@ -11,6 +12,7 @@ export const Rating = ({ isEditable = false, rating, setRating, ...props }: Rati
 
 	useEffect(() => {
 		constructRating(rating);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [rating]);
 
 	const constructRating = (currentRating: number) => {
@@ -26,9 +28,9 @@ export const Rating = ({ isEditable = false, rating, setRating, ...props }: Rati
 					onClick={() => onClick(i + 1)}
 					tabIndex={isEditable ? 0 : -1}
 					onKeyDown={(e: KeyboardEvent<SVGAElement>) => isEditable && handleSpace(i + 1, e)}
-					
+
 				/>
-				
+
 			);
 		});
 		setRatingArray(updatedArray);

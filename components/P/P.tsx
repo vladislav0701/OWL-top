@@ -1,6 +1,8 @@
-import { PProps } from './P.props';
-import styles from './P.module.css';
 import cn from 'classnames';
+
+import { PProps } from './P.props';
+
+import styles from './P.module.css';
 
 export const P = ({ size = 'm', children, className, ...props }: PProps): JSX.Element => {
 	return (
