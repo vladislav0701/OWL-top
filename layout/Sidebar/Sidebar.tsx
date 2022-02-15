@@ -5,11 +5,13 @@ import { Menu } from '../Menu/Menu';
 
 import styles from './Sidebar.module.css';
 import Logo from '../logo.svg';
+import { Search } from '../../components';
 
-export const Sidebar = ({className, ...props }: SidebarProps): JSX.Element => {
+export const Sidebar = ({ className, ...props }: SidebarProps): JSX.Element => {
 	return (
 		<div className={cn(className, styles.sidebar)} {...props}>
-			<Logo className={styles.logo}/>
+			<Logo className={styles.logo} />
+			<Search />
 			<div>Поиск</div>
 			<Menu />
 		</div>
