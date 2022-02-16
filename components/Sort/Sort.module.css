@@ -9,12 +9,15 @@
 
 .sortIcon {
 	display: none;
+
 	margin-right: 8px;
+
 	cursor: pointer;
 }
 
 .active {
 	color: var(--primary);
+
 	font-weight: bold;
 }
 
