@@ -1,5 +1,4 @@
 import { ForwardedRef, forwardRef, useRef, useState } from 'react';
-import cn from 'classnames';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
@@ -27,6 +26,7 @@ export const Product = motion(forwardRef(({ product, className, ...props }: Prod
 			behavior: 'smooth',
 			block: 'start'
 		});
+		reviewRef.current?.focus();
 	};
 
 	const variants = {
@@ -57,16 +57,23 @@ export const Product = motion(forwardRef(({ product, className, ...props }: Prod
 				</div>
 				<div className={styles.right}>
 					<div className={styles.price}>
-						{priceRu(product.price)}
-						{product.oldPrice && <Tag color='green' className={styles.oldPrice}>{priceRu(product.price - product.oldPrice)}</Tag>}
+						<span className='visualyHidden'>цена</span>{priceRu(product.price)}
+						{product.oldPrice && <Tag color='green' className={styles.oldPrice}>
+							<span className='visualyHidden'>скидка</span>
+							{priceRu(product.price - product.oldPrice)}
+						</Tag>}
 					</div>
 					<div className={styles.credit}>
+						<span className='visualyHidden'>кредит</span>
 						{priceRu(product.credit)}
 						<span>/мес</span>
 					</div>
-					<div className={styles.rating}><Rating rating={product.reviewAvg ?? product.initialRating} /></div>
-					<div className={styles.priceTitle}>цена</div>
-					<div className={styles.creditTitle}>в кредит</div>
+					<div className={styles.rating}>
+						<span className='visualyHidden'>{'рейтинг' + product.reviewAvg ?? product.initialRating}</span>
+						<Rating rating={product.reviewAvg ?? product.initialRating} />
+					</div>
+					<div className={styles.priceTitle} aria-hidden={true}>цена</div>
+					<div className={styles.creditTitle} aria-hidden={true}>в кредит</div>
 					<div className={styles.rateTitle}>
 						<a href="#ref" onClick={scrollToReview}>
 							{product.reviewCount} {declOfNum(product.reviewCount, ['отзыв', 'отзыва', 'отзывов'])}
@@ -101,7 +108,9 @@ export const Product = motion(forwardRef(({ product, className, ...props }: Prod
 						onClick={() => setIsReviewOpened(!isReviewOpened)}
 						appearance='ghost'
 						arrow={isReviewOpened ? 'down' : 'right'}
-						className={styles.reviewButton}>
+						className={styles.reviewButton}
+						aria-expanded={isReviewOpened}
+					>
 						Читать отзывы
 					</Button>
 				</div>
@@ -114,7 +123,9 @@ export const Product = motion(forwardRef(({ product, className, ...props }: Prod
 				animate={isReviewOpened ? 'visible' : 'hidden'}>
 				<Card color='blue'
 					className={styles.reviews}
-					ref={reviewRef}>
+					ref={reviewRef}
+					tabIndex={isReviewOpened ? 0 : -1}
+				>
 					<>
 						{product.reviews.map(r => (
 							<div key={r._id} >
@@ -122,7 +133,7 @@ export const Product = motion(forwardRef(({ product, className, ...props }: Prod
 								<Divider />
 							</div>
 						))}
-						<ReviewForm productId={product._id} />
+						<ReviewForm isOpened={isReviewOpened} productId={product._id} />
 					</>
 				</Card>
 			</motion.div>

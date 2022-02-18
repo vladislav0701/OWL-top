@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { useRouter } from 'next/router';
 
 import { Input } from '../Input/Input';
 import { Button } from '../Button/Button';
@@ -7,7 +8,6 @@ import { SearchProps } from './Search.props';
 
 import styles from './Search.module.css';
 import SearchIcon from './search.svg';
-import { useRouter } from 'next/router';
 
 export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 	const [search, setSearch] = useState<string>('');
@@ -29,7 +29,7 @@ export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 	};
 
 	return (
-		<div className={cn(className, styles.search)} {...props}>
+		<form className={cn(className, styles.search)} {...props} role='search'>
 			<Input
 				className={styles.input}
 				placeholder='Поиск...'
@@ -41,9 +41,10 @@ export const Search = ({ className, ...props }: SearchProps): JSX.Element => {
 				appearance='primary'
 				className={styles.button}
 				onClick={goToSearch}
+				aria-label='Искать по сайту'
 			>
 				<SearchIcon />
 			</Button>
-		</div>
+		</form>
 	);
 };

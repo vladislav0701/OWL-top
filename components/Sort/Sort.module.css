@@ -3,8 +3,14 @@
 	gap: 40px;
 }
 
-.sort span {
+.sort button {
 	cursor: pointer;
+
+	border: none;
+	background: none;
+
+	font-size: 16px;
+	line-height: 22px;
 }
 
 .sortIcon {
@@ -23,4 +29,8 @@
 
 .active .sortIcon {
 	display: inline-block;
+}
+
+.sortName {
+	display: none;
 }
